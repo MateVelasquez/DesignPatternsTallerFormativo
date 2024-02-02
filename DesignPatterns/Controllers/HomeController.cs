@@ -14,13 +14,19 @@ namespace DesignPatterns.Controllers
 {
     public class HomeController : Controller
     {
+        // _logger es una instancia de ILogger<T> utilizada para realizar registros o loggings.
         private readonly ILogger<HomeController> _logger;
 
+        // _vehicleRepository es una instancia de IVehicleRepository utilizada para interactuar con el repositorio de vehículos.
         private readonly IVehicleRepository _vehicleRepository;
 
-        public HomeController(IVehicleRepository vehicleRepository,ILogger<HomeController> logger)
+        // Constructor de la clase HomeController, que recibe instancias de IVehicleRepository y ILogger<HomeController>.
+        public HomeController(IVehicleRepository vehicleRepository, ILogger<HomeController> logger)
         {
+            // Se asigna la instancia de IVehicleRepository recibida al campo _vehicleRepository.
             _vehicleRepository = vehicleRepository;
+
+            // Se asigna la instancia de ILogger<HomeController> recibida al campo _logger.
             _logger = logger;
         }
 
@@ -37,34 +43,39 @@ namespace DesignPatterns.Controllers
         /*[HttpGet]
         public IActionResult AddMustang()
         {
+            // Se crea un nuevo constructor de modelos de automóviles (CarModelBuilder).
             var builder = new CarModelBuilder();
-            _vehicleRepository.AddVehicle(builder.Build());
-            return Redirect("/");
-        }
 
-        [HttpGet]
-        public IActionResult AddExplorer()
-        {
-            var builder = new CarModelBuilder()
-            .SetModel("Ford")
-            .SetColor("blue");
+            // Se construye un vehículo utilizando el constructor de modelos y se agrega al repositorio de vehículos.
             _vehicleRepository.AddVehicle(builder.Build());
+
+            // Se redirige al usuario a la página de inicio ("/") después de agregar el vehículo.
             return Redirect("/");
         }*/
 
         [HttpGet]
         public IActionResult AddMustang()
         {
-            Creator  creator = new FordMustangCreator();
+            // Se crea un creador concreto específico para el modelo Mustang.
+            Creator creator = new FordMustangCreator();
+
+            // Se utiliza el Factory Method para crear una instancia específica de Vehicle (Mustang) y se agrega al repositorio de vehículos.
             _vehicleRepository.AddVehicle(creator.Create());
+
+            // Se redirige al usuario a la página de inicio ("/") después de agregar el vehículo.
             return Redirect("/");
         }
 
         [HttpGet]
         public IActionResult AddExplorer()
         {
+            // Se crea un creador concreto específico para el modelo Explorer.
             Creator creator = new FordExplorerCreator();
+
+            // Se utiliza el Factory Method para crear una instancia específica de Vehicle (Explorer) y se agrega al repositorio de vehículos.
             _vehicleRepository.AddVehicle(creator.Create());
+
+            // Se redirige al usuario a la página de inicio ("/") después de agregar el vehículo.
             return Redirect("/");
         }
 
